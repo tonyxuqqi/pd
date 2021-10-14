@@ -1069,6 +1069,7 @@ func (bs *balanceSolver) buildOperator() (op *operator.Operator, infl *Influence
 		} else {
 			desc := "move-hot-" + bs.rwTy.String() + "-peer"
 			typ = "move-peer"
+			log.Info("MoveHotRegion", zap.Uint64("region", bs.cur.region.GetID()))
 			op, err = operator.CreateMovePeerOperator(
 				desc,
 				bs.cluster,

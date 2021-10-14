@@ -81,6 +81,12 @@ func CreateMoveRegionOperator(desc string, cluster opt.Cluster, region *core.Reg
 
 // CreateMovePeerOperator creates an operator that replaces an old peer with a new peer.
 func CreateMovePeerOperator(desc string, cluster opt.Cluster, region *core.RegionInfo, kind OpKind, oldStore uint64, peer *metapb.Peer) (*Operator, error) {
+	log.Info(
+		"CreateMovePeerOperator",
+		zap.Uint64("region", region.GetID()),
+		zap.Uint64("oldstore", oldStore),
+		zap.Uint64("newstore", peer.StoreId))
+
 	return NewBuilder(desc, cluster, region).
 		RemovePeer(oldStore).
 		AddPeer(peer).
