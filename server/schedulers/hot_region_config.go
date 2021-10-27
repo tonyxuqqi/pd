@@ -137,6 +137,9 @@ type hotRegionSchedulerConfig struct {
 
 	// Separately control whether to start hotspot scheduling for TiFlash
 	EnableForTiFlash bool `json:"enable-for-tiflash,string"`
+
+	// Disable read or write hot scheduler
+	DisableRwType string `json:"disable-rw-scheduler"`
 }
 
 func (conf *hotRegionSchedulerConfig) EncodeConfig() ([]byte, error) {
@@ -275,6 +278,18 @@ func (conf *hotRegionSchedulerConfig) IsStrictPickingStoreEnabled() bool {
 	conf.RLock()
 	defer conf.RUnlock()
 	return conf.StrictPickingStore
+}
+
+func (conf *hotRegionSchedulerConfig) IsDisableRwType(rw rwType) bool {
+	conf.RLock()
+	defer conf.RUnlock()
+	return rw.String() == conf.DisableRwType
+}
+
+func (conf *hotRegionSchedulerConfig) SetDisableRwType(rw string) {
+	conf.Lock()
+	defer conf.Unlock()
+	conf.DisableRwType = rw
 }
 
 func (conf *hotRegionSchedulerConfig) ServeHTTP(w http.ResponseWriter, r *http.Request) {
