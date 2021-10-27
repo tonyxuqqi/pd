@@ -104,6 +104,7 @@ func (conf *hotRegionSchedulerConfig) getValidConf() *hotRegionSchedulerConfig {
 		WritePeerPriorities:    adjustConfig(conf.lastQuerySupported, conf.WritePeerPriorities, getWritePeerPriorities),
 		StrictPickingStore:     conf.StrictPickingStore,
 		EnableForTiFlash:       conf.EnableForTiFlash,
+		DisableRwType:          conf.DisableRwType,
 	}
 }
 
