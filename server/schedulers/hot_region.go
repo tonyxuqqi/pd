@@ -162,11 +162,11 @@ func (h *hotScheduler) dispatch(typ rwType, cluster opt.Cluster) []*operator.Ope
 
 	switch typ {
 	case read:
-		if h.conf.IsDisableRwType(typ) {
+		if !h.conf.IsDisableRwType(typ) {
 			return h.balanceHotReadRegions(cluster)
 		}
 	case write:
-		if h.conf.IsDisableRwType(typ) {
+		if !h.conf.IsDisableRwType(typ) {
 			return h.balanceHotWriteRegions(cluster)
 		}
 	}
